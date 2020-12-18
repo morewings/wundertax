@@ -1,9 +1,13 @@
+import { useMemo } from 'react';
 import { sortBy, split, flow, map, find, join } from 'lodash/fp'
 import { useLibraryContext } from './context';
 
 export const useGetItemList = () => {
   const { state: { books, magazines } } = useLibraryContext();
-  return sortBy([({ title }) => title], [...books, ...magazines]);
+  return useMemo(
+    () => sortBy([({ title }) => title], [...books, ...magazines]),
+    [books, magazines]
+  );
 }
 
 export const useGetAuthorName = (email) => {
